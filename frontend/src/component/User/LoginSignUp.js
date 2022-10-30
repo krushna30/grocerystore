@@ -37,7 +37,7 @@ const LoginSignUp = () => {
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   const loginSubmit = (e) => {
-    console.log("Login Form Submitted");
+  //  console.log("Login Form Submitted");
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword));
   };
@@ -47,9 +47,9 @@ const LoginSignUp = () => {
     e.preventDefault();
 
  
-    console.log(`name is${name} = email is :${email}=password is ${password}= avatar is${avatar}`)
+ //   console.log(`name is${name} = email is :${email}=password is ${password}= avatar is${avatar}`)
    dispatch(register(name , email , password , avatar));
-  console.log("Sign Up Form Submitted");
+ //  console.log("Sign Up Form Submitted");
    };
   const registerDataChange = (e) => {
     if (e.target.name === "avatar") {
@@ -58,10 +58,10 @@ const LoginSignUp = () => {
       reader.onload = () => {
       
         if (reader.readyState === 2) {
-          console.log("inside readystate 2");
+         // console.log("inside readystate 2");
           setAvatarPreview(reader.result);
           setAvatar(reader.result);
-          console.log(reader.result);
+         // console.log(reader.result);
         }
       //  console.log(avatar);
       };
@@ -70,7 +70,7 @@ const LoginSignUp = () => {
     } else {
      
       setUser({ ...user, [e.target.name]: e.target.value });
-      console.log(`${e.target.name} : ${e.target.value}`)
+    //  console.log(`${e.target.name} : ${e.target.value}`)
     
     }
   };

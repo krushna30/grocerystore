@@ -64,14 +64,14 @@ import {
       const userData = {
          name , email ,password , avatar
       }
-      console.log("Inside the const register");
+    //  console.log("Inside the const register");
      // const config = { headers: { "Content-Type": "multipart/form-data"  } };
      const config = { headers: { "Content-Type": "application/json" } };
 
-      console.log("before posting")
+    //  console.log("before posting")
         const { data } = await axios.post(`/api/v1/register`, userData, config);
-        console.log("after posting")
-      console.log(data);
+     //   console.log("after posting")
+    //  console.log(data);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
     } catch (error) {
       dispatch({

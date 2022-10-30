@@ -12,18 +12,30 @@ import Search from "./component/Product/Search.js";
 import history from "./history";
 import LoginSignUp from "./component/User/LoginSignUp";
 // import Loader from "./component/layout/Loader/Loader";
+import store from "./store";
+import {loadUser} from "./actions/userAction";
+import UserOptions from "./component/layout/Header/UserOptions.js"
+import { useSelector } from "react-redux";
+
 function App() {
+
+  const {isAuthenticated ,user } = useSelector(state => state.user);
+  
   useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
+
+
+    store.dispatch(loadUser());
   }, []);
 
   return (
     <Router history={history}>
       <Header />
+      { isAuthenticated && <UserOptions user={user} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
