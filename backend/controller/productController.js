@@ -37,6 +37,17 @@ products = await apiFeature.query.clone();
 
   });
 });
+
+//Get all products   -- Admin only
+exports.getAdminProducts = catchAsyncErrors(async (req, res ,next) => {
+  console.log("Before product find in admin products ");
+  const products = await Product.find();
+  console.log("After product find in admin  products");
+   res.status(200).json({
+     success: true,
+     products,
+   });
+ });
 //Get single Product Details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
@@ -173,3 +184,5 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+

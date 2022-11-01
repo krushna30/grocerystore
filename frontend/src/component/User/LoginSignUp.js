@@ -10,8 +10,9 @@ import FaceIcon from "@material-ui/icons/Face";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login ,register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
-
+import { useLocation } from 'react-router-dom';
 const LoginSignUp = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
@@ -43,10 +44,7 @@ const LoginSignUp = () => {
   };
 
   const registerSubmit = (e) => {
-  
-    e.preventDefault();
-
- 
+      e.preventDefault();
  //   console.log(`name is${name} = email is :${email}=password is ${password}= avatar is${avatar}`)
    dispatch(register(name , email , password , avatar));
  //  console.log("Sign Up Form Submitted");
@@ -74,6 +72,9 @@ const LoginSignUp = () => {
     
     }
   };
+
+  const redirect = location.search ? location.search.split("=")[1] : "/account";
+  console.log(location.search.split("=")[1]);
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -81,11 +82,11 @@ const LoginSignUp = () => {
     }
 
       if (isAuthenticated) {
-          console.log("navigate")
-          navigate("/account");
-      // history.push(redirect);
+       
+      //  navigate("/account");
+    navigate(redirect);
     }
-  }, [dispatch, error, alert , isAuthenticated]);
+  }, [navigate ,dispatch, error, alert ,redirect, isAuthenticated]);
   const switchTabs = (e, tab) => {
     if (tab === "login") {
       switcherTab.current.classList.add("shiftToNeutral");

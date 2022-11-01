@@ -7,7 +7,7 @@ import Carousel from "react-material-ui-carousel";
 import "./ProductDetails.css";
 import { Rating } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
-//import { addItemsToCart } from "../../actions/cartAction";
+import { addItemsToCart } from "../../actions/cartAction";
 import ReviewCard from "./ReviewCard"
 import {
   Dialog,
@@ -61,7 +61,7 @@ const ProductDetails = () => {
   };
 
   const addToCartHandler = () => {
-    // dispatch(addItemsToCart(id, quantity));
+    dispatch(addItemsToCart(id, quantity));
     alert.success("Item Added To Cart");
   };
 
@@ -147,7 +147,7 @@ const ProductDetails = () => {
                     <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button
-                    disabled={product.Stock < 1 ? true : false}
+                    disabled={product.Stock <= 1 ? true : false}
                     onClick={addToCartHandler}
                   >
                     Add to Cart

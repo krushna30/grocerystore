@@ -5,18 +5,25 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { productDetailsReducer, productsReducer  } from "./reducers/productReducer";
 import { userReducer } from "./reducers/userReducer";
+import { profileReducer } from "./reducers/userReducer";
+import { forgotPasswordReducer } from "./reducers/userReducer";
+import { cartReducer } from "./reducers/cartReducer";
+import { newOrderReducer } from "./reducers/orderReducer";
+import { myOrdersReducer } from "./reducers/orderReducer";
+import { orderDetailsReducer } from "./reducers/orderReducer";
+import { newProductReducer } from "./reducers/productReducer";
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
    user: userReducer,
-  // profile: profileReducer,
-  // forgotPassword: forgotPasswordReducer,
-  // cart: cartReducer,
-  // newOrder: newOrderReducer,
-  // myOrders: myOrdersReducer,
-  // orderDetails: orderDetailsReducer,
+   profile: profileReducer,
+  forgotPassword: forgotPasswordReducer,
+  cart: cartReducer,
+   newOrder: newOrderReducer,
+  myOrders: myOrdersReducer,
+  orderDetails: orderDetailsReducer,
   // newReview: newReviewReducer,
-  // newProduct: newProductReducer,
+  newProduct: newProductReducer,
   // product: productReducer,
   // allOrders: allOrdersReducer,
   // order: orderReducer,
@@ -26,7 +33,16 @@ const reducer = combineReducers({
   // review: reviewReducer,
 });
 
-let initialState = {};
+let initialState = {
+  cart: {
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : [],
+    shippingInfo: localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo"))
+      : {},
+  },
+};
 const middleware = [thunk];
 const store = createStore(  // it can be directly get imported from the redux
   reducer,

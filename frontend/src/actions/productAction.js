@@ -59,9 +59,10 @@ export const getProduct = (keyword ="",currentPage =1 , price=[0,25000] , catego
 export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
-
+    console.log("before get admin");
     const { data } = await axios.get("/api/v1/admin/products");
-
+    console.log("after get admin");
+    console.log(data);
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
       payload: data.products,
@@ -75,10 +76,12 @@ export const getAdminProduct = () => async (dispatch) => {
 };
 
 // Create Product
-export const createProduct = (productData) => async (dispatch) => {
+export const createProduct = (name , price , description , category , Stock ,images) => async (dispatch) => {
   try {
     dispatch({ type: NEW_PRODUCT_REQUEST });
-
+    const productData = {
+      name , price , description , category , Stock ,images 
+   }
     const config = {
       headers: { "Content-Type": "application/json" },
     };
