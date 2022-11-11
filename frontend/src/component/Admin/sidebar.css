@@ -12,7 +12,12 @@
     width: 100%;
     transition: all 0.5s;
   }
-  
+.sidebar > a > img{
+  margin-top: 25px;
+  margin-left: 30px;
+  width: 5vmax;
+  height: 5vmax;
+}
   .sidebar > a > img:hover {
     filter: drop-shadow(0 0 10px tomato);
   }
@@ -39,4 +44,5 @@
   .MuiTypography-root {
     background-color: #fff !important;
   }
+  
   

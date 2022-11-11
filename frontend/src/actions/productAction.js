@@ -105,19 +105,25 @@ export const createProduct = (name , price , description , category , Stock ,ima
 };
 
 // Update Product
-export const updateProduct = (id, productData) => async (dispatch) => {
+export const updateProduct = (id, name , price , description , category , Stock ,images) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PRODUCT_REQUEST });
-
+    const productData = {
+      name , price , description , category , Stock ,images 
+    }
+    
+    console.log("Images in product action are :-");
+    console.log(images);
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-
+    console.log("action before update");
     const { data } = await axios.put(
       `/api/v1/admin/product/${id}`,
       productData,
       config
     );
+    console.log("action after update");
 
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
@@ -135,9 +141,9 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
-
+    
     const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
-
+   
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
       payload: data.success,

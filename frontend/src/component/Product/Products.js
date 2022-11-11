@@ -15,24 +15,17 @@ const categories = [
   "Grocery",
   "Cosmatics",
   "Jams",
-  "Pooja's Things",
+
   "Dals",
-  "Chips & Biscuits",
-  "Hat",
+  "Sweets",
+  "Utensils",
 ];
-
-
-
-
-
-
-
 
 const Products = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 25000]);
+  const [price, setPrice] = useState([0, 2000]);
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
   const {
@@ -57,8 +50,8 @@ const Products = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getProduct(keyword, currentPage, price , category , ratings));
-  }, [dispatch, keyword, currentPage, price ,category ,ratings, alert , error]);
+    dispatch(getProduct(keyword, currentPage, price, category, ratings));
+  }, [dispatch, keyword, currentPage, price, category, ratings, alert, error]);
 
   let count = filteredProductsCount;
   return (
@@ -84,11 +77,10 @@ const Products = () => {
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
               min={0}
-              max={25000}
+              max={2000}
             />
             <Typography>Categories</Typography>
-           
-           
+
             <ul className="categoryBox">
               {categories.map((category) => (
                 <li
@@ -99,7 +91,7 @@ const Products = () => {
                   {category}
                 </li>
               ))}
-            </ul> 
+            </ul>
 
             <fieldset>
               <Typography component="legend">Ratings Above</Typography>

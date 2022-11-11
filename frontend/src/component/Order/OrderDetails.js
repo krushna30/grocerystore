@@ -9,21 +9,21 @@ import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import { useParams } from "react-router-dom";
 const OrderDetails = () => {
-    const id = useParams();
-    console.log(id);
-    const { order, error, loading } = useSelector((state) => state.orderDetails);
-
-    const dispatch = useDispatch();
-    const alert = useAlert();
-
-    useEffect(() => {
-        if (error) {
-          alert.error(error);
-          dispatch(clearErrors());
-        }
+    const{ id} = useParams();
+     console.log(id);
+     const { order, error, loading } = useSelector((state) => state.orderDetails);
     
-        dispatch(getOrderDetails(id));
-      }, [dispatch, alert, error, id]);
+   const dispatch = useDispatch();
+     const alert = useAlert();
+
+     useEffect(() => {
+         if (error) {
+           alert.error(error);
+           dispatch(clearErrors());
+         }
+    
+         dispatch(getOrderDetails(id));
+       }, [dispatch, alert, error, id]);
   return (
     <Fragment>
       {loading ? (
@@ -120,5 +120,6 @@ const OrderDetails = () => {
     </Fragment>
   )
 }
+
 
 export default OrderDetails

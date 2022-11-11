@@ -118,14 +118,12 @@ import {
   
   // Get Order Details
 export const getOrderDetails = (id) => async (dispatch) => {
-    console.log("Inside Get Order Details");
-    console.log(id.id);
+   
     try {
       dispatch({ type: ORDER_DETAILS_REQUEST });
-       
-      
-        const { data } = await axios.get(`/api/v1/order/${id.id}`);
-        console.log(`data is : -${data}`)
+
+        const { data } = await axios.get(`/api/v1/order/${id}`);
+        console.log(`data is : -${data.order}`)
      
       dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
     } catch (error) {

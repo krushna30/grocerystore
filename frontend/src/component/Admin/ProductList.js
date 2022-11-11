@@ -23,10 +23,12 @@ const ProductList = () => {
     const alert = useAlert();
   
     const { error, products } = useSelector((state) => state.products);
-  
-    // const { error: deleteError, isDeleted } = useSelector(
-    //   (state) => state.product
-    // );
+    const deleteProductHandler = (id) => {
+        dispatch(deleteProduct(id)); 
+   }
+    const { error: deleteError, isDeleted } = useSelector(
+      (state) => state.product
+    );
 
     const columns = [
         { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },
@@ -68,9 +70,9 @@ const ProductList = () => {
                 </Link>
     
                  <Button
-                //   onClick={() =>
-                //     deleteProductHandler(params.getValue(params.id, "id"))
-                //   }
+                  onClick={() =>
+                    deleteProductHandler(params.getValue(params.id, "id"))
+                  }
                 >
                   <DeleteIcon />
                 </Button>
@@ -99,19 +101,19 @@ const ProductList = () => {
           dispatch(clearErrors());
         }
     
-        // if (deleteError) {
-        //   alert.error(deleteError);
-        //   dispatch(clearErrors());
-        // }
+        if (deleteError) {
+          alert.error(deleteError);
+          dispatch(clearErrors());
+        }
     
-        // if (isDeleted) {
-        //   alert.success("Product Deleted Successfully");
-        //   history.push("/admin/dashboard");
-        //   dispatch({ type: DELETE_PRODUCT_RESET });
-        // }
+        if (isDeleted) {
+          alert.success("Product Deleted Successfully");
+          navigate("/admin/dashboard");
+          dispatch({ type: DELETE_PRODUCT_RESET });
+        }
     
         dispatch(getAdminProduct());
-      }, [dispatch, alert, error ]);
+      }, [dispatch, alert, error , deleteError , navigate , isDeleted ]);
 
   return (
     <Fragment>

@@ -84,7 +84,7 @@ const ProductDetails = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-
+    dispatch(getProductDetails(id));
     //     if (reviewError) {
     //       alert.error(reviewError);
     //       dispatch(clearErrors());
@@ -94,7 +94,7 @@ const ProductDetails = () => {
     //       alert.success("Review Submitted Successfully");
     //       dispatch({ type: NEW_REVIEW_RESET });
     //     }
-    dispatch(getProductDetails(id));
+   
   }, [dispatch, id, error, alert]);
   return (
     <Fragment>
@@ -115,12 +115,8 @@ const ProductDetails = () => {
                     alt={`Slide`}
                   />
               )} */}
-                 {/* <img
-                    className="CarouselImage"
-                    key={1}
-                    src={product.images[0].url} 
-                    alt={`Slide`}
-                  /> */}
+                  {/* <img src={product.images[0].url} alt={product.name} /> */}
+                
             </div>
             {/* carousel end */}
             <div>

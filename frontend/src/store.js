@@ -12,6 +12,11 @@ import { newOrderReducer } from "./reducers/orderReducer";
 import { myOrdersReducer } from "./reducers/orderReducer";
 import { orderDetailsReducer } from "./reducers/orderReducer";
 import { newProductReducer } from "./reducers/productReducer";
+import { productReducer } from "./reducers/productReducer";
+import { allOrdersReducer } from "./reducers/orderReducer";
+import { orderReducer } from "./reducers/orderReducer";
+import { allUsersReducer } from "./reducers/userReducer";
+import { userDetailsReducer } from "./reducers/userReducer";
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
@@ -24,11 +29,11 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   // newReview: newReviewReducer,
   newProduct: newProductReducer,
-  // product: productReducer,
-  // allOrders: allOrdersReducer,
-  // order: orderReducer,
-  // allUsers: allUsersReducer,
-  // userDetails: userDetailsReducer,
+  product: productReducer,
+ allOrders: allOrdersReducer,
+ order: orderReducer,
+   allUsers: allUsersReducer,
+   userDetails: userDetailsReducer,
   // productReviews: productReviewsReducer,
   // review: reviewReducer,
 });

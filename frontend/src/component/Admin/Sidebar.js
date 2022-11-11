@@ -16,7 +16,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
     <Link to="/">
-      <img src={logo} alt="Ecommerce" />
+      <img src={logo} alt="Ecommerce" className="logo" />
     </Link>
     <Link to="/admin/dashboard">
       <p>
@@ -50,12 +50,12 @@ const Sidebar = () => {
         <PeopleIcon /> Users
       </p>
     </Link>
-    <Link to="/admin/reviews">
+    {/* <Link to="/admin/reviews">
       <p>
         <RateReviewIcon />
         Reviews
       </p>
-    </Link>
+    </Link> */}
   </div>
   )
 }

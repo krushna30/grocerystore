@@ -10,16 +10,16 @@ import { getAllOrders } from "../../actions/orderAction.js";
 import { getAllUsers } from "../../actions/userAction.js";
 import MetaData from "../layout/MetaData";
 
-let totalAmount = 1200;
+
 
 const Dashboard = () => {
     const dispatch = useDispatch();
 
-    // const { products } = useSelector((state) => state.products);
+    const { products } = useSelector((state) => state.products);
   
-    // const { orders } = useSelector((state) => state.allOrders);
+    const { orders } = useSelector((state) => state.allOrders);
   
-    // const { users } = useSelector((state) => state.allUsers);
+    const { users } = useSelector((state) => state.allUsers);
 // const doughnutState = {
 //         labels: ["Out of Stock", "InStock"],
 //         datasets: [
@@ -45,12 +45,16 @@ const Dashboard = () => {
 //       },
 //     ],
 //   };
-    
-// useEffect(() => {
-//     dispatch(getAdminProduct());
-//     dispatch(getAllOrders());
-//     dispatch(getAllUsers());
-//   }, [dispatch]);
+let totalAmount = 10;
+orders &&
+orders.forEach((item) => {
+  totalAmount += item.totalPrice;
+});
+    useEffect(() => {
+     dispatch(getAdminProduct());
+     dispatch(getAllOrders());
+    dispatch(getAllUsers());
+   }, [dispatch]);
   return (
     <div className="dashboard">
       <MetaData title="Dashboard - Admin Panel" />
@@ -67,23 +71,25 @@ const Dashboard = () => {
           </div>
           <div className="dashboardSummaryBox2">
             <Link to="/admin/products">
-            <p>Products</p>
-              {/* <p>{products && products.length}</p> */}
+              <p>Products</p>
+              <p></p>
+              <p>{products && products.length}</p>
             </Link>
             <Link to="/admin/orders">
-               <p>Orders</p>
-              {/* <p>{orders && orders.length}</p> */}
+              <p>Orders</p>
+              <p></p>
+              <p>{orders && orders.length}</p>
             </Link>
             <Link to="/admin/users">
               <p>Users</p>
-               {/* <p>{users && users.length}</p> */}
+               <p>{users && users.length}</p>
             </Link>
           </div>
         </div>
 
         <div className="lineChart">
                 {/* <Line data={linestate} /> */}
-                  linechart
+                
         </div>
 
         <div className="doughnutChart">

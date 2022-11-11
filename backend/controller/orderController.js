@@ -92,6 +92,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   }
 
   order.orderItems.forEach(async (o) => {
+    console.log(`Quantity os ${o.quantity}`);
     await updateStock(o.product, o.quantity);
   });
 
@@ -114,7 +115,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 async function updateStock(id, quantity) {
   const product = await Product.findById(id);
 
-  product.Stock -= quantity;
+  product.Stock = product.Stock - quantity;
   await product.save({ validateBeforeSave: false });
 }
 

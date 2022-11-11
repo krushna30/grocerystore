@@ -35,7 +35,11 @@ import axios from "axios";
 import Dashboard from "./component/Admin/Dashboard.js";
 import ProductList from "./component/Admin/ProductList.js";
 import NewProduct from "./component/Admin/NewProduct";
-
+import UpdateProduct from "./component/Admin/UpdateProduct.js";
+import OrderList from "./component/Admin/OrderList";
+import ProcessOrder from "./component/Admin/ProcessOrder.js";
+import UsersList from "./component/Admin/UsersList";
+import UpdateUser from "./component/Admin/UpdateUser";
 function App() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -171,7 +175,66 @@ function App() {
           path="/admin/product"
           element={
             !loading && isAuthenticated && user.role === "admin" ? (
-              <NewProduct/>
+              <NewProduct />
+            ) : (
+              <LoginSignUp />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/admin/orders"
+          element={
+            !loading && isAuthenticated && user.role === "admin" ? (
+              <OrderList />
+            ) : (
+              <LoginSignUp />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/product/:id"
+          element={
+            !loading && isAuthenticated && user.role === "admin" ? (
+              <UpdateProduct />
+            ) : (
+              <LoginSignUp />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/order/:id"
+          element={
+            !loading && isAuthenticated && user.role === "admin" ? (
+              <ProcessOrder />
+            ) : (
+              <LoginSignUp />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/users"
+          element={
+            !loading && isAuthenticated && user.role === "admin" ? (
+              <UsersList />
+            ) : (
+              <LoginSignUp />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/user/:id"
+          element={
+            !loading && isAuthenticated && user.role === "admin" ? (
+              <UpdateUser />
             ) : (
               <LoginSignUp />
             )

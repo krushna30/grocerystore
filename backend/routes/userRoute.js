@@ -50,11 +50,11 @@ router
 
   // update user role --admin only
   router
-  .route("/admin/users/:id").put(isAuthenticatedUser, authorizeRoles("admin"), updateUserRole);
+  .route("/admin/user/:id").put(isAuthenticatedUser, authorizeRoles("admin"), updateUserRole);
 
 // delete user --- admin only
 router
-  .route("/admin/users/:id")
+  .route("/admin/user/:id")
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
 
 module.exports = router;

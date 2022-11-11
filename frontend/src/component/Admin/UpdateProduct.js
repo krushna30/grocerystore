@@ -1,7 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./newProduct.css";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, createProduct } from "../../actions/productAction";
+import {
+  clearErrors,
+  updateProduct,
+  getProductDetails,
+} from "../../actions/productAction";
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
 import MetaData from "../layout/MetaData";
@@ -11,15 +15,22 @@ import StorageIcon from "@material-ui/icons/Storage";
 import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import SideBar from "./Sidebar";
-import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router-dom";
-const NewProduct = () => {
-    const navigate = useNavigate();
+import { useParams } from "react-router-dom";
+const UpdateProduct = () => {
+  const navigate = useNavigate();
+    const id = useParams();
+   
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const { error, product } = useSelector((state) => state.productDetails);
 
-    const dispatch = useDispatch();
-    const alert = useAlert();
-
-   const { loading, error, success } = useSelector((state) => state.newProduct);
+  const {
+    loading,
+    error: updateError,
+    isUpdated,
+  } = useSelector((state) => state.product);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -27,69 +38,88 @@ const NewProduct = () => {
   const [category, setCategory] = useState("");
   const [Stock, setStock] = useState(0);
   const [images, setImages] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-  
+
   const categories = [
     "Grocery",
     "Cosmatics",
     "Jams",
-   
+    "Pooja's Things",
     "Dals",
-    "Sweets",
-    "Utensils",
-  ];
+    "Chips & Biscuits",
+    "Hat",
+    ];
+    
+    const productId = id.id;
+  console.log(`Product id in UpdateProduct.js${productId}`);
 
-    
     useEffect(() => {
-        if (error) {
-          alert.error(error);
-          dispatch(clearErrors());
+      
+    if (product && product._id !== productId) {
+            dispatch(getProductDetails(productId));
+          } else {
+            setName(product.name);
+            setDescription(product.description);
+            setPrice(product.price);
+            setCategory(product.category);
+            setStock(product.Stock);
+            setOldImages(product.images);
+      }
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    if (isUpdated) {
+     alert.success("Product Updated Successfully");
+      navigate("/admin/dashboard");
+       dispatch({ type: UPDATE_PRODUCT_RESET });
+     }
+  }, [dispatch, alert, error, navigate , isUpdated ,productId ,product , updateError]);
+
+  const updateProductSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(`IMages inside submitHandler:-`);
+    console.log(images);
+    dispatch(updateProduct(productId, name, price, description, category, Stock, images));
+    
+  };
+
+  const updateProductImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    setImages([]);
+    setImagesPreview([]);
+    setOldImages([]);
+      
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((old) => [...old, reader.result]);
+          setImages((old) => [...old, reader.result]);
         }
-    
-        if (success) {
-          alert.success("Product Created Successfully");
-         navigate("/admin/dashboard");
-          dispatch({ type: NEW_PRODUCT_RESET });
-        }
-      }, [dispatch, alert, error, navigate, success]);
-   
-      const createProductSubmitHandler = (e) => {
-        e.preventDefault(); 
-        dispatch(createProduct(name , price , description , category , Stock ,images));
       };
+
+      reader.readAsDataURL(file);
+    });
+    };
     
-      const createProductImagesChange = (e) => {
-        const files = Array.from(e.target.files);
-    
-        setImages([]);
-        setImagesPreview([]);
-    
-        files.forEach((file) => {
-          const reader = new FileReader();
-    
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setImagesPreview((old) => [...old, reader.result]);
-              setImages((old) => [...old, reader.result]);
-            }
-          };
-    
-          reader.readAsDataURL(file);
-        });
-      };
-    
+
   return (
     <Fragment>
-      <MetaData title="Create Product" />
+      <MetaData title="Update Product" />
       <div className="dashboard">
         <SideBar />
         <div className="newProductContainer">
           <form
             className="createProductForm"
             encType="multipart/form-data"
-            onSubmit={createProductSubmitHandler}
+            onSubmit={updateProductSubmitHandler}
           >
-            <h1>Create Product</h1>
+            <h1>Update  Product</h1>
 
             <div>
               <SpellcheckIcon />
@@ -150,11 +180,16 @@ const NewProduct = () => {
                 type="file"
                 name="avatar"
                 accept="image/*"
-                onChange={createProductImagesChange}
+                onChange={updateProductImagesChange}
                 multiple
               />
             </div>
-
+            <div id="createProductFormImage">
+              {oldImages &&
+                oldImages.map((image, index) => (
+                  <img key={index} src={image.url} alt="Old Product Preview" />
+                ))}
+            </div>
             <div id="createProductFormImage">
               {imagesPreview.map((image, index) => (
                 <img key={index} src={image} alt="Product Preview" />
@@ -175,4 +210,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default UpdateProduct;
